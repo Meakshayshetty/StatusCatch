@@ -1,57 +1,144 @@
 package com.example.statusdownloader.activity
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
+import androidx.core.app.ActivityCompat
+
 import com.example.statusdownloader.R
 import com.example.statusdownloader.databinding.ActivityMainBinding
-import com.example.statusdownloader.fraagment.DownloadFragment
-import com.example.statusdownloader.fraagment.StorieFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.statusdownloader.fragment.FragmentSettings
+import com.example.statusdownloader.fragment.FragmentStatus
+import com.example.statusdownloader.utils.Constants
+import com.example.statusdownloader.utils.SharedPrefKeys
+import com.example.statusdownloader.utils.SharedPrefUtils
+import com.example.statusdownloader.utils.replaceFragment
+import com.example.statusdownloader.utils.slideFromStart
+import com.example.statusdownloader.utils.slideToEndWithFadeOut
 
 class MainActivity : AppCompatActivity() {
-    private val binding :ActivityMainBinding by lazy{
+    private val activity = this
+    private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private lateinit var bottomNav :BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-
-        }
-        val bottomNav = binding.bottomNavigation
-        binding.bottomNavigation.itemIconTintList =null
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.flMain, StorieFragment())
-            .commit()
-        bottomNav.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.status ->{
-                    Log.e("fragmentOpen","0ne")
-                    loadFragment(StorieFragment())
-                }
-                R.id.downlaod -> {
-                    Log.e("fragmentOpen","two")
-
-                    loadFragment(DownloadFragment())
-                }
+        SharedPrefUtils.init(activity)
+        binding.apply {
+            splashLogic()
+            requestPermission()
+            val fragmentWhatsAppStatus = FragmentStatus()
+            val bundle = Bundle()
+            bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+            replaceFragment(fragmentWhatsAppStatus, bundle)
+            toolBar.setNavigationOnClickListener {
+               // activity.onBackPressed()
             }
-            true
+            binding.bottomNavigation.setOnNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.menu_status -> {
+                        // whatsapp status
+                        val fragmentWhatsAppStatus = FragmentStatus()
+                        val bundle = Bundle()
+                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+                        replaceFragment(fragmentWhatsAppStatus, bundle)
+                       // drawerLayout.close()
+                    }
+
+                    R.id.menu_business_status -> {
+                        // whatsapp business status
+                        val fragmentWhatsAppStatus = FragmentStatus()
+                        val bundle = Bundle()
+                        bundle.putString(
+                            Constants.FRAGMENT_TYPE_KEY,
+                            Constants.TYPE_WHATSAPP_BUSINESS
+                        )
+                        replaceFragment(fragmentWhatsAppStatus, bundle)
+                            //drawerLayout.close()
+                    }
+
+                    R.id.menu_settings -> {
+                        // settings
+                        replaceFragment(FragmentSettings())
+                      //  drawerLayout.close()
+                    }
+                }
+
+                true
+            }
+
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.flMain, fragment)
-            .commit()
+    private val PERMISSION_REQUEST_CODE = 50
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            val isPermissionsGranted = SharedPrefUtils.getPrefBoolean(
+                SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+                false
+            )
+            if (!isPermissionsGranted) {
+                ActivityCompat.requestPermissions(
+                    /* activity = */ activity,
+                    /* permissions = */ arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    /* requestCode = */ PERMISSION_REQUEST_CODE
+                )
+                Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (isGranted) {
+                SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED, true)
+            } else {
+                SharedPrefUtils.putPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+                    false
+                )
+
+            }
+        }
+    }
+
+    private fun splashLogic() {
+        binding.apply {
+            splashLayout.cardView.slideFromStart()
+            Handler(Looper.myLooper()!!).postDelayed({
+                splashScreenHolder.slideToEndWithFadeOut()
+                splashScreenHolder.visibility = View.GONE
+            }, 2000)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val fragment = supportFragmentManager?.findFragmentById(R.id.fragment_container)
+        fragment?.onActivityResult(requestCode, resultCode, data)
     }
 }
+
+
+
+
+
+
+
+
+

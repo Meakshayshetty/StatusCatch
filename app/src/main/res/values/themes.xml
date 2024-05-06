@@ -3,7 +3,18 @@
     <style name="Base.Theme.StatusDownloader" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+    <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
+    <item name="fontFamily">@font/helvetice_regular</item>
+    <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="TabText">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="BottomNavStyle">
+        <item name="colorSecondaryContainer">@color/colorPrimaryHighlight</item>
+    </style>
     <style name="Theme.StatusDownloader" parent="Base.Theme.StatusDownloader" />
 </resources>

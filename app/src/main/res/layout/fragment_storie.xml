@@ -5,10 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0A1717"
-    tools:context=".fraagment.StorieFragment">
+    tools:context=".fragment.StorieFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:background="@color/base_color"
+        android:layout_height="wrap_content">
+        
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white"
+            app:titleCentered="true"
+           />
+
+        <TableLayout
+            android:id="@+id/tab"
+            android:backgroundTint="@color/transperent_color"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar"/>
+
+
+    
     <TextView
+        android:id="@+id/tvMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

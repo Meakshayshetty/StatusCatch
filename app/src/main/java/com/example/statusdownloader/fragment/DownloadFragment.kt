@@ -1,4 +1,4 @@
-package com.example.statusdownloader.fraagment
+package com.example.statusdownloader.fragment
 
 import android.os.Bundle
 import android.util.Log
