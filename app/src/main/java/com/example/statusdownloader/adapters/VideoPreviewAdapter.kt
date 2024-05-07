@@ -1,4 +1,4 @@
-package com.devatrii.statussaver.views.adapters
+package com.example.statusdownloader.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -28,11 +28,10 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
 
                 player.prepare()
 
-
                 val downloadImage = if (mediaModel.isDownloaded) {
                     R.drawable.ic_downloaded
                 } else {
-                    R.drawable.ic_download
+                    R.drawable.download_new
                 }
                 tools.statusDownload.setImageResource(downloadImage)
 
@@ -62,7 +61,7 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): VideoPreviewAdapter.ViewHolder {
+    ): ViewHolder {
         return ViewHolder(
             ItemVideoPreviewBinding.inflate(
                 LayoutInflater.from(context),
@@ -72,7 +71,7 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
         )
     }
 
-    override fun onBindViewHolder(holder: VideoPreviewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = list[position]
         holder.bind(model)
     }

@@ -13,15 +13,15 @@ import com.example.statusdownloader.R
 import com.example.statusdownloader.databinding.DialogGuideBinding
 import com.example.statusdownloader.databinding.ItemSettingsBinding
 import com.example.statusdownloader.model.SettingsModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) :
-    RecyclerView.Adapter<SettingsAdapter.viewHolder>() {
+class SettingsAdapter(private var list: ArrayList<SettingsModel>, var context: Context) :
+    RecyclerView.Adapter<SettingsAdapter.ViewHolder>() {
 
-    inner class viewHolder(var binding: ItemSettingsBinding) :
+    inner class ViewHolder(var binding: ItemSettingsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: SettingsModel, position: Int) {
             binding.apply {
+                img.setImageResource(model.image)
                 settingsTitle.text = model.title
                 settingsDesc.text = model.desc
 
@@ -43,27 +43,16 @@ class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) 
                             )
 
                             dialog.show()
-
-
                         }
 
                         2 -> {
-                            MaterialAlertDialogBuilder(context).apply {
-                                setTitle("Disclaimer")
-                                setMessage("Disclaimer Here")
-                                setPositiveButton("Okay",null)
-                                show()
-                            }
-                        }
-
-                        3 -> {
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://atrii.dev")).apply {
                                 context.startActivity(this)
                             }
 
                         }
 
-                        4 -> {
+                        3 -> {
                         Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_SUBJECT,context.getString(R.string.app_name))
@@ -72,7 +61,7 @@ class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) 
                         }
                         }
 
-                        5 -> {
+                        4 -> {
                             Intent(
                                 Intent.ACTION_VIEW,
                                 Uri.parse("https://play.google.com/store/apps/details?id=" + context.packageName)
@@ -88,13 +77,13 @@ class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        return viewHolder(ItemSettingsBinding.inflate(LayoutInflater.from(context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemSettingsBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
     override fun getItemCount() = list.size
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(model = list[position], position)
     }
 }

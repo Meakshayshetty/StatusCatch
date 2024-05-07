@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextAppearance="@style/TabText"
-            app:tabBackground="@color/colorPrimary"
-            app:tabIndicatorColor="@color/colorPrimaryHighlight"
+            android:background="@drawable/tab_bg"
+            android:layout_margin="10dp"
             app:tabTextColor="@color/white"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorFullWidth="true"
+            app:tabIndicator="@drawable/tab_selected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
@@ -63,9 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-            </com.google.android.material.card.MaterialCardView>
-
-
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

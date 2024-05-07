@@ -2,7 +2,7 @@ package com.example.statusdownloader.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.devatrii.statussaver.views.adapters.ImagePreviewAdapter
+import com.example.statusdownloader.adapters.ImagePreviewAdapter
 import com.example.statusdownloader.databinding.ActivityImagesPreviewBinding
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.Constants

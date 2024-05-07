@@ -8,7 +8,7 @@
         android:id="@+id/card_status"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_margin="8dp"
+        android:layout_margin="6dp"
         app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,13 +44,13 @@
 
             <ImageView
                 android:id="@+id/status_download"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:padding="4dp"
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/round_gradient"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_download"
+                android:src="@drawable/download_new"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:tint="@color/white" />

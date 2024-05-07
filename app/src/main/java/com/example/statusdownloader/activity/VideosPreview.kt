@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.devatrii.statussaver.views.adapters.VideoPreviewAdapter
+import com.example.statusdownloader.adapters.VideoPreviewAdapter
 import com.example.statusdownloader.databinding.ActivityVideosPreviewBinding
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.Constants

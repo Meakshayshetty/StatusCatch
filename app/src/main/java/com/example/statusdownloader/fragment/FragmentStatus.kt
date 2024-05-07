@@ -32,7 +32,7 @@ class FragmentStatus : Fragment() {
     private val WHATSAPP_BUSINESS_REQUEST_CODE = 102
 
     private val viewPagerTitles = arrayListOf("Images", "Videos")
-    lateinit var viewModel: StatusViewModel
+    private lateinit var viewModel: StatusViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
@@ -60,8 +60,6 @@ class FragmentStatus : Fragment() {
                             binding.swipeRefreshLayout.setOnRefreshListener {
                                 refreshStatuses()
                             }
-                        }else{
-
                         }
                         permissionLayout.btnPermission.setOnClickListener {
                             getFolderPermissions(
@@ -113,13 +111,25 @@ class FragmentStatus : Fragment() {
             }
         }
     }
+    fun bottomNavListener(item:Int){
+        when(item){
+            1 ->{
+                Log.e("bottomSelected","1")
+            }
+            2->{
+                Log.e("bottomSelected","2")
+
+            }
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
 
-    fun refreshStatuses() {
+    private fun refreshStatuses() {
         when (type) {
             Constants.TYPE_WHATSAPP_MAIN -> {
                 Toast.makeText(requireActivity(), "Refreshing WP Statuses", Toast.LENGTH_SHORT)
@@ -142,20 +152,21 @@ class FragmentStatus : Fragment() {
         }, 2000)
     }
 
-    fun getWhatsAppStatuses() {
+    private fun getWhatsAppStatuses() {
         // function to get wp statuses
         binding.permissionLayoutHolder.visibility = View.GONE
         viewModel.getWhatsAppStatuses()
     }
 
     private val TAG = "FragmentStatus"
-    fun getWhatsAppBusinessStatuses() {
+    private fun getWhatsAppBusinessStatuses() {
         // function to get wp statuses
         binding.permissionLayoutHolder.visibility = View.GONE
         Log.d(TAG, "getWhatsAppBusinessStatuses: Getting Wp Business Statuses")
         viewModel.getWhatsAppBusinessStatuses()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

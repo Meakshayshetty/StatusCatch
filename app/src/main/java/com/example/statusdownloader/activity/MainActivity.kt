@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-
 import com.example.statusdownloader.R
 import com.example.statusdownloader.databinding.ActivityMainBinding
 import com.example.statusdownloader.fragment.FragmentSettings
@@ -24,6 +23,7 @@ import com.example.statusdownloader.utils.slideFromStart
 import com.example.statusdownloader.utils.slideToEndWithFadeOut
 
 class MainActivity : AppCompatActivity() {
+    private var statusFrag =FragmentStatus()
     private val activity = this
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity() {
                         val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
                         replaceFragment(fragmentWhatsAppStatus, bundle)
-                       // drawerLayout.close()
+                        statusFrag.bottomNavListener(1)
+
+                        // drawerLayout.close()
                     }
 
                     R.id.menu_business_status -> {
@@ -63,7 +65,9 @@ class MainActivity : AppCompatActivity() {
                             Constants.TYPE_WHATSAPP_BUSINESS
                         )
                         replaceFragment(fragmentWhatsAppStatus, bundle)
-                            //drawerLayout.close()
+                        statusFrag.bottomNavListener(2)
+
+                        //drawerLayout.close()
                     }
 
                     R.id.menu_settings -> {
@@ -129,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager?.findFragmentById(R.id.fragment_container)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 }

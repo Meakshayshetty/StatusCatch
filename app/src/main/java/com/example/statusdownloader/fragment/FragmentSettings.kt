@@ -32,36 +32,35 @@ class FragmentSettings : Fragment() {
 
             list.add(
                 SettingsModel(
+                    image = R.drawable.how_to_use,
                     title = "How to use",
                     desc = "Know how to download statuses"
                 )
             )
             list.add(
                 SettingsModel(
+                    image=R.drawable.save_in_folder,
                     title = "Save in Folder",
                     desc = "/internalstorage/Documents/${getString(R.string.app_name)}"
                 )
             )
             list.add(
                 SettingsModel(
-                    title = "Disclaimer",
-                    desc = "Read Our Disclaimer"
-                )
-            )
-            list.add(
-                SettingsModel(
+                    R.drawable.privacy_policy,
                     title = "Privacy Policy",
                     desc = "Read Our Terms & Conditions"
                 )
             )
             list.add(
                 SettingsModel(
+                    R.drawable.share,
                     title = "Share",
                     desc = "Sharing is caring"
                 )
             )
             list.add(
                 SettingsModel(
+                    R.drawable.rate_us,
                     title = "Rate Us",
                     desc = "Please support our work by rating on PlayStore"
                 )

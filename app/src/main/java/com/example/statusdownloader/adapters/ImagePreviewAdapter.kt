@@ -1,4 +1,4 @@
-package com.devatrii.statussaver.views.adapters
+package com.example.statusdownloader.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.example.statusdownloader.databinding.ItemImagePreviewBinding
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.saveStatus
 
-class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context) :
+class ImagePreviewAdapter (private val list: ArrayList<MediaModel>, val context: Context) :
     RecyclerView.Adapter<ImagePreviewAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemImagePreviewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -25,7 +25,7 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                 val downloadImage = if (mediaModel.isDownloaded) {
                     R.drawable.ic_downloaded
                 } else {
-                    R.drawable.ic_download
+                    R.drawable.download_new
                 }
                 tools.statusDownload.setImageResource(downloadImage)
 
@@ -37,7 +37,7 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                         // status is downloaded
                         Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
                         mediaModel.isDownloaded = true
-                        tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
+                        tools.statusDownload.setImageResource(R.drawable.download_new)
                     } else {
                         // unable to download status
                         Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
@@ -50,11 +50,11 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ImagePreviewAdapter.ViewHolder {
+    ): ViewHolder {
         return ViewHolder(ItemImagePreviewBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: ImagePreviewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = list[position]
         holder.bind(model)
     }

@@ -33,7 +33,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                 val downloadImage = if (mediaModel.isDownloaded) {
                     R.drawable.ic_downloaded
                 } else {
-                    R.drawable.ic_download
+                    R.drawable.download_new
                 }
                 statusDownload.setImageResource(downloadImage)
 
