@@ -1,10 +1,10 @@
-package com.devatrii.statussaver.viewmodels.factories
+package com.example.statusdownloader.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.statusdownloader.data.StatusRepo
+import com.example.statusdownloader.repository.StatusRepository
 import com.example.statusdownloader.model.MEDIA_TYPE_IMAGE
 import com.example.statusdownloader.model.MEDIA_TYPE_VIDEO
 import com.example.statusdownloader.model.MediaModel
@@ -16,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class StatusViewModel(val repo: StatusRepo) : ViewModel() {
+class StatusViewModel(val repo: StatusRepository) : ViewModel() {
     private val wpStatusLiveData get() = repo.whatsAppStatusesLiveData
     private val wpBusinessStatusLiveData get() = repo.whatsAppBusinessStatusesLiveData
     private val TAG = "StatusViewModel"
@@ -132,8 +132,6 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
             whatsAppBusinessVideosLiveData.postValue(tempList)
         }
     }
-
-
 }
 
 

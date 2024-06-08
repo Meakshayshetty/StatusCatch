@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.statusdownloader.R
@@ -23,7 +24,7 @@ import com.example.statusdownloader.utils.slideFromStart
 import com.example.statusdownloader.utils.slideToEndWithFadeOut
 
 class MainActivity : AppCompatActivity() {
-    private var statusFrag =FragmentStatus()
+    private var statusFrag = FragmentStatus()
     private val activity = this
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -41,23 +42,20 @@ class MainActivity : AppCompatActivity() {
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
             replaceFragment(fragmentWhatsAppStatus, bundle)
             toolBar.setNavigationOnClickListener {
-               // activity.onBackPressed()
+                // activity.onBackPressed()
             }
             binding.bottomNavigation.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_status -> {
-                        // whatsapp status
                         val fragmentWhatsAppStatus = FragmentStatus()
                         val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
                         replaceFragment(fragmentWhatsAppStatus, bundle)
                         statusFrag.bottomNavListener(1)
 
-                        // drawerLayout.close()
                     }
 
                     R.id.menu_business_status -> {
-                        // whatsapp business status
                         val fragmentWhatsAppStatus = FragmentStatus()
                         val bundle = Bundle()
                         bundle.putString(
@@ -67,20 +65,21 @@ class MainActivity : AppCompatActivity() {
                         replaceFragment(fragmentWhatsAppStatus, bundle)
                         statusFrag.bottomNavListener(2)
 
-                        //drawerLayout.close()
                     }
 
                     R.id.menu_settings -> {
-                        // settings
                         replaceFragment(FragmentSettings())
-                      //  drawerLayout.close()
                     }
                 }
 
                 true
             }
-
         }
+        onBackPressedDispatcher.addCallback(this, object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
     }
 
     private val PERMISSION_REQUEST_CODE = 50
@@ -116,7 +115,6 @@ class MainActivity : AppCompatActivity() {
                     SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
                     false
                 )
-
             }
         }
     }
@@ -131,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)

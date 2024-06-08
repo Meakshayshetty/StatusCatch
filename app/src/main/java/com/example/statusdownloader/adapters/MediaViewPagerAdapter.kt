@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.statusdownloader.fragment.FragmentMedia
+import com.example.statusdownloader.fragment.FragmentImageAndVideo
 import com.example.statusdownloader.utils.Constants
 
 class MediaViewPagerAdapter(
@@ -18,7 +18,7 @@ class MediaViewPagerAdapter(
         return when(position){
             0->{
                 // images media fragment
-                val mediaFragment = FragmentMedia()
+                val mediaFragment = FragmentImageAndVideo()
                 val bundle = Bundle()
                 bundle.putString(Constants.MEDIA_TYPE_KEY,imagesType)
                 mediaFragment.arguments = bundle
@@ -26,7 +26,7 @@ class MediaViewPagerAdapter(
             }
             else->{
                 // videos media fragment
-                val mediaFragment = FragmentMedia()
+                val mediaFragment = FragmentImageAndVideo()
                 val bundle = Bundle()
                 bundle.putString(Constants.MEDIA_TYPE_KEY,videosType)
                 mediaFragment.arguments = bundle

@@ -51,6 +51,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/white"
                 android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"

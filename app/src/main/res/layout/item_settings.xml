@@ -5,9 +5,9 @@
     android:background="@null"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        app:cardElevation="7dp"
         android:layout_margin="10dp"
         android:background="@color/transperent_color"
         android:backgroundTint="@null"
@@ -72,7 +72,7 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

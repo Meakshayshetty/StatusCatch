@@ -1,4 +1,4 @@
-package com.example.statusdownloader.data
+package com.example.statusdownloader.repository
 
 import android.app.Activity
 import android.content.Context
@@ -16,7 +16,7 @@ import com.example.statusdownloader.utils.SharedPrefUtils
 import com.example.statusdownloader.utils.getFileExtension
 import com.example.statusdownloader.utils.isStatusExist
 
-class StatusRepo(val context: Context) {
+class StatusRepository(val context: Context) {
 
     val whatsAppStatusesLiveData = MutableLiveData<ArrayList<MediaModel>>()
     val whatsAppBusinessStatusesLiveData = MutableLiveData<ArrayList<MediaModel>>()

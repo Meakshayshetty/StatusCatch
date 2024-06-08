@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activity.VideosPreview">
+    tools:context=".activity.VideoPreviewActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tool_bar"

@@ -7,7 +7,7 @@ import com.example.statusdownloader.databinding.ActivityImagesPreviewBinding
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.Constants
 
-class ImagesPreview : AppCompatActivity() {
+class ImagePreviewActivity : AppCompatActivity() {
     private val activity = this
     private val binding by lazy {
         ActivityImagesPreviewBinding.inflate(layoutInflater)

@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
+import com.example.statusdownloader.viewmodels.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
-import com.example.statusdownloader.adapters.MediaAdapter
-import com.example.statusdownloader.data.StatusRepo
+import com.example.statusdownloader.adapters.ImageAndVideoAdapter
+import com.example.statusdownloader.repository.StatusRepository
 import com.example.statusdownloader.databinding.FragmentMediaBinding
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.Constants
 
-class FragmentMedia : Fragment() {
+class FragmentImageAndVideo : Fragment() {
     private val binding by lazy {
         FragmentMediaBinding.inflate(layoutInflater)
     }
     lateinit var viewModel: StatusViewModel
-    lateinit var adapter: MediaAdapter
+    lateinit var adapter: ImageAndVideoAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
             arguments?.let {
-                val repo = StatusRepo(requireActivity())
+                val repo = StatusRepository(requireActivity())
                 viewModel = ViewModelProvider(
                     requireActivity(),
                     StatusViewModelFactory(repo)
@@ -41,7 +41,7 @@ class FragmentMedia : Fragment() {
                             filteredList.forEach { model ->
                                 list.add(model)
                             }
-                            adapter = MediaAdapter(list, requireActivity())
+                            adapter = ImageAndVideoAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
                             if (list.size == 0) {
                                 tempMediaText.visibility = View.VISIBLE
@@ -62,7 +62,7 @@ class FragmentMedia : Fragment() {
                             filteredList.forEach { model ->
                                 list.add(model)
                             }
-                            adapter = MediaAdapter(list, requireActivity())
+                            adapter = ImageAndVideoAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
                             if (list.size == 0) {
                                 tempMediaText.visibility = View.VISIBLE
@@ -82,7 +82,7 @@ class FragmentMedia : Fragment() {
                             filteredList.forEach { model ->
                                 list.add(model)
                             }
-                            adapter = MediaAdapter(list, requireActivity())
+                            adapter = ImageAndVideoAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
                             if (list.size == 0) {
                                 tempMediaText.visibility = View.VISIBLE
@@ -102,7 +102,7 @@ class FragmentMedia : Fragment() {
                             filteredList.forEach { model ->
                                 list.add(model)
                             }
-                            adapter = MediaAdapter(list, requireActivity())
+                            adapter = ImageAndVideoAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
                             if (list.size == 0) {
                                 tempMediaText.visibility = View.VISIBLE

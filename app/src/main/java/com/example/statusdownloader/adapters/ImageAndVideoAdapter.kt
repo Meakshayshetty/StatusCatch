@@ -10,16 +10,16 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.statusdownloader.R
-import com.example.statusdownloader.activity.ImagesPreview
-import com.example.statusdownloader.activity.VideosPreview
+import com.example.statusdownloader.activity.ImagePreviewActivity
+import com.example.statusdownloader.activity.VideoPreviewActivity
 import com.example.statusdownloader.databinding.ItemMediaBinding
 import com.example.statusdownloader.model.MEDIA_TYPE_IMAGE
 import com.example.statusdownloader.model.MediaModel
 import com.example.statusdownloader.utils.Constants
 import com.example.statusdownloader.utils.saveStatus
 
-class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
-    RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
+class ImageAndVideoAdapter(val list: ArrayList<MediaModel>, val context: Context) :
+    RecyclerView.Adapter<ImageAndVideoAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mediaModel: MediaModel) {
@@ -43,7 +43,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                         Intent().apply {
                             putExtra(Constants.MEDIA_LIST_KEY,list)
                             putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context, ImagesPreview::class.java)
+                            setClass(context, ImagePreviewActivity::class.java)
                             context.startActivity(this)
                         }
                     } else {
@@ -51,7 +51,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                         Intent().apply {
                             putExtra(Constants.MEDIA_LIST_KEY,list)
                             putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context, VideosPreview::class.java)
+                            setClass(context, VideoPreviewActivity::class.java)
                             context.startActivity(this)
                         }
                     }

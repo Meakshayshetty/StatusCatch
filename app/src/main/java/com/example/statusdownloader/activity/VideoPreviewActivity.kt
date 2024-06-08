@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class VideosPreview : AppCompatActivity() {
+class VideoPreviewActivity : AppCompatActivity() {
     private val activity = this
     private val binding by lazy {
         ActivityVideosPreviewBinding.inflate(layoutInflater)
