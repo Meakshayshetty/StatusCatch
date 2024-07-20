@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Status Downloader"
+rootProject.name = "StatusCatch"
 include(":app")
  

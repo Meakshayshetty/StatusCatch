@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.statusdownloader"
+    namespace = "com.akshay.statuscatch"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.statusdownloader"
+        applicationId = "com.akshay.statuscatch"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
