@@ -11,4 +11,7 @@
     <string name="share">Share</string>
     <string name="app_icon">app icon</string>
     <string name="alert_icon">alert icon</string>
+    <string name="okay">Okay</string>
+    <string name="statuscatch_is_an_app_designed_to_help_you_download_whatsapp_statuses_easily_follow_these_steps_to_learn_how_to_use_statuscatch_effectively">StatusCatch is an app designed to help you download WhatsApp statuses easily. Follow these steps to learn how to use StatusCatch effectively:</string>
+    <string name="how_to_use">How To Use</string>
 </resources>

@@ -5,3 +5,7 @@ data class SettingsModel(
     val title:String,
     val desc:String
 )
+data class HowToUse(
+    var heading:String,
+    var desc:String
+)
