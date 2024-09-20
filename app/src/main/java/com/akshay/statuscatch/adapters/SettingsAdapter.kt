@@ -47,7 +47,7 @@ class SettingsAdapter(private var list: ArrayList<SettingsModel>, var context: C
                         Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_SUBJECT,context.getString(R.string.app_name))
-                            putExtra(Intent.EXTRA_TEXT,"My App is soo cool please download it :https://play.google.com/store/apps/details?id=${context.packageName}")
+                            putExtra(Intent.EXTRA_TEXT,"\"\uD83D\uDE80 Want to save your favorite WhatsApp statuses for free? Download our app now and enjoy seamless downloads in just a few taps! \uD83D\uDCF2✨ :https://play.google.com/store/apps/details?id=${context.packageName}")
                             context.startActivity(this)
                         }
                         }
