@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.akshay.statuscatch.viewmodels.StatusViewModel
-import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
+import com.akshay.statuscatch.viewmodels.factories.StatusViewModelFactory
 import com.akshay.statuscatch.adapters.MediaViewPagerAdapter
 import com.akshay.statuscatch.databinding.FragmentStatusBinding
 import com.akshay.statuscatch.repository.StatusRepository
