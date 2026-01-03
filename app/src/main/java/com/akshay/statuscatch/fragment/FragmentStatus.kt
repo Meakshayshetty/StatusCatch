@@ -70,9 +70,22 @@ class FragmentStatus : Fragment() {
                         }
                         val viewPagerAdapter = MediaViewPagerAdapter(requireActivity())
                         statusViewPager.adapter = viewPagerAdapter
-                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
+                        val mediator = TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
                             tab.text = viewPagerTitles[pos]
-                        }.attach()
+                        }
+                        mediator.attach()
+
+                        // observe image/video counts and update tab titles
+                        viewModel.whatsAppImagesLiveData.observe(requireActivity()) { imagesList ->
+                            val count = imagesList?.size ?: 0
+                            val title = "${viewPagerTitles[0]} ($count)"
+                            tabLayout.getTabAt(0)?.text = title
+                        }
+                        viewModel.whatsAppVideosLiveData.observe(requireActivity()) { videosList ->
+                            val count = videosList?.size ?: 0
+                            val title = "${viewPagerTitles[1]} ($count)"
+                            tabLayout.getTabAt(1)?.text = title
+                        }
 
                     }
 
@@ -102,9 +115,22 @@ class FragmentStatus : Fragment() {
                             videosType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS
                         )
                         statusViewPager.adapter = viewPagerAdapter
-                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
+                        val mediator = TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
                             tab.text = viewPagerTitles[pos]
-                        }.attach()
+                        }
+                        mediator.attach()
+
+                        // observe business image/video counts and update tab titles
+                        viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { imagesList ->
+                            val count = imagesList?.size ?: 0
+                            val title = "${viewPagerTitles[0]} ($count)"
+                            tabLayout.getTabAt(0)?.text = title
+                        }
+                        viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { videosList ->
+                            val count = videosList?.size ?: 0
+                            val title = "${viewPagerTitles[1]} ($count)"
+                            tabLayout.getTabAt(1)?.text = title
+                        }
                     }
                 }
 
@@ -201,6 +227,8 @@ class FragmentStatus : Fragment() {
 
     }
 }
+
+
 
 
 
