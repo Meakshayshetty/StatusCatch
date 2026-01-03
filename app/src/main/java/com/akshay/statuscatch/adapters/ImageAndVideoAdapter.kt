@@ -37,6 +37,7 @@ class ImageAndVideoAdapter(val list: ArrayList<MediaModel>, val context: Context
                 }
                 statusDownload.setImageResource(downloadImage)
 
+
                 cardStatus.setOnClickListener {
                     if (mediaModel.type == MEDIA_TYPE_IMAGE) {
                         // goto image preview activity

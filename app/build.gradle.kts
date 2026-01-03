@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.akshay.statuscatch"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.akshay.statuscatch"

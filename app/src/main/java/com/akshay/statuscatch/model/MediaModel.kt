@@ -9,5 +9,7 @@ data class MediaModel(
     val pathUri: String,
     val fileName: String,
     val type: String = MEDIA_TYPE_IMAGE,
-    var isDownloaded: Boolean = false
+    var isDownloaded: Boolean = false,
+    var lastModifiedEpochMs: Long? = null, // epoch millis when the file was last modified (nullable)
+    var creationEpochMs: Long? = null // epoch millis when the file was created/taken (nullable)
 ):Serializable
