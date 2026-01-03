@@ -5,14 +5,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.akshay.statuscatch.R
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.akshay.statuscatch.adapters.HowToUseAdapter
 import com.akshay.statuscatch.databinding.ActivityHowToUseBinding
-import com.akshay.statuscatch.databinding.ActivityMainBinding
 import com.akshay.statuscatch.model.HowToUse
 
 class HowToUseActivity : AppCompatActivity() {
-    private val list2 = ArrayList<HowToUse>()
     private val binding by lazy {
         ActivityHowToUseBinding.inflate(layoutInflater)
     }
@@ -21,69 +20,60 @@ class HowToUseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        // apply window insets to root container to avoid overlap with system bars
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
 
-        }
-        val adapter by lazy {
-            HowToUseAdapter(list2, this)
-        }
-        addHowToUseList()
-        binding.rvHowToUse.adapter =adapter
+        // prepare data and adapter
+        val items = buildHowToUseList()
+        val adapter = HowToUseAdapter(ArrayList(items), this)
+
+        // setup RecyclerView with stable layout manager and dividers
+        binding.rvHowToUse.layoutManager = LinearLayoutManager(this)
+        binding.rvHowToUse.setHasFixedSize(true)
+        binding.rvHowToUse.adapter = adapter
+        binding.rvHowToUse.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
 
         binding.okayBtn.setOnClickListener {
             finish()
         }
     }
-    fun addHowToUseList(){
-        list2.add(
+
+    private fun buildHowToUseList(): List<HowToUse> {
+        return listOf(
             HowToUse(
-                "1. Open WhatsApp and View Status\n",
-                "Open WhatsApp on your smartphone.\n" +
-                        "Scroll through your contacts' statuses and view the status you want to download.\n" +
-                        "Note: Ensure you view the status in WhatsApp first for it to appear in StatusCatch."
-            )
-        )
-        list2.add(
+                "1. Open WhatsApp and View Status",
+                "Open WhatsApp on your smartphone.\nScroll through your contacts' statuses and view the status you want to download.\nNote: Ensure you view the status in WhatsApp first for it to appear in StatusCatch."
+            ),
             HowToUse(
-                "2. Launch StatusCatch\n",
-                "Open the StatusCatch app on your smartphone.\n"
-            )
-        )
-        list2.add(
+                "2. Launch StatusCatch",
+                "Open the StatusCatch app on your smartphone."
+            ),
             HowToUse(
-                "3. Grant Storage Permissions\n",
-                "Make sure StatusCatch has permission to access your device's storage.\n" +
-                        "If not granted already, enable storage access in your device's settings."
-            )
-        )
-        list2.add(
+                "3. Grant Storage Permissions",
+                "Make sure StatusCatch has permission to access your device's storage. If not granted already, enable storage access in your device's settings."
+            ),
             HowToUse(
-                "4. Status Appears in StatusCatch\n",
-                "The status you viewed on WhatsApp will automatically appear within the StatusCatch app.\n"
-            )
-        )
-        list2.add(
+                "4. Status Appears in StatusCatch",
+                "The status you viewed on WhatsApp will automatically appear within the StatusCatch app."
+            ),
             HowToUse(
-                "5. Download Status\n",
-                "Locate the status you wish to download within StatusCatch.\n" +
-                        "Tap on the download icon or similar option next to the status."
-            )
-        )
-        list2.add(
+                "5. Download Status",
+                "Locate the status you wish to download within StatusCatch and tap the download icon next to it."
+            ),
             HowToUse(
-                "6. Save to Local Storage\n",
-                "StatusCatch will save the downloaded status directly to your device's local storage.\n" +
-                        "Access the saved status in the StatusCatch app or your device's gallery."
-            )
-        )
-        list2.add(
+                "6. Save to Local Storage",
+                "StatusCatch will save the downloaded status to your device's local storage. Access the saved status in StatusCatch or your gallery."
+            ),
             HowToUse(
-                "Additional Tips\n",
-                "Offline Viewing: Downloaded statuses can be viewed offline anytime, even after they expire on WhatsApp.\n" +
-                        "Updates: StatusCatch may update to support new features or WhatsApp status format changes."
+                "Additional Tips",
+                "Offline Viewing: Downloaded statuses can be viewed offline anytime, even after they expire on WhatsApp.\nUpdates: StatusCatch may update to support new features or WhatsApp status format changes."
             )
         )
     }
