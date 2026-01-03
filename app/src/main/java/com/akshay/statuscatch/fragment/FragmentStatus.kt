@@ -75,16 +75,29 @@ class FragmentStatus : Fragment() {
                         }
                         mediator.attach()
 
-                        // observe image/video counts and update tab titles
+                        // set custom views for tabs (title + count)
+                        for (i in 0 until tabLayout.tabCount) {
+                            val tab = tabLayout.getTabAt(i)
+                            val custom = layoutInflater.inflate(com.akshay.statuscatch.R.layout.tab_custom, null)
+                            val titleView = custom.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_title)
+                            val countView = custom.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            titleView.text = viewPagerTitles[i]
+                            countView.text = "0"
+                            tab?.customView = custom
+                        }
+
+                        // observe image/video counts and update tab custom views
                         viewModel.whatsAppImagesLiveData.observe(requireActivity()) { imagesList ->
                             val count = imagesList?.size ?: 0
-                            val title = "${viewPagerTitles[0]} ($count)"
-                            tabLayout.getTabAt(0)?.text = title
+                            val tab = tabLayout.getTabAt(0)
+                            val countView = tab?.customView?.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            countView?.text = count.toString()
                         }
                         viewModel.whatsAppVideosLiveData.observe(requireActivity()) { videosList ->
                             val count = videosList?.size ?: 0
-                            val title = "${viewPagerTitles[1]} ($count)"
-                            tabLayout.getTabAt(1)?.text = title
+                            val tab = tabLayout.getTabAt(1)
+                            val countView = tab?.customView?.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            countView?.text = count.toString()
                         }
 
                     }
@@ -120,16 +133,29 @@ class FragmentStatus : Fragment() {
                         }
                         mediator.attach()
 
-                        // observe business image/video counts and update tab titles
+                        // set custom views for business tabs
+                        for (i in 0 until tabLayout.tabCount) {
+                            val tab = tabLayout.getTabAt(i)
+                            val custom = layoutInflater.inflate(com.akshay.statuscatch.R.layout.tab_custom, null)
+                            val titleView = custom.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_title)
+                            val countView = custom.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            titleView.text = viewPagerTitles[i]
+                            countView.text = "0"
+                            tab?.customView = custom
+                        }
+
+                        // observe business image/video counts and update tab custom views
                         viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { imagesList ->
                             val count = imagesList?.size ?: 0
-                            val title = "${viewPagerTitles[0]} ($count)"
-                            tabLayout.getTabAt(0)?.text = title
+                            val tab = tabLayout.getTabAt(0)
+                            val countView = tab?.customView?.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            countView?.text = count.toString()
                         }
                         viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { videosList ->
                             val count = videosList?.size ?: 0
-                            val title = "${viewPagerTitles[1]} ($count)"
-                            tabLayout.getTabAt(1)?.text = title
+                            val tab = tabLayout.getTabAt(1)
+                            val countView = tab?.customView?.findViewById<android.widget.TextView>(com.akshay.statuscatch.R.id.tab_count)
+                            countView?.text = count.toString()
                         }
                     }
                 }
@@ -227,6 +253,8 @@ class FragmentStatus : Fragment() {
 
     }
 }
+
+
 
 
 
