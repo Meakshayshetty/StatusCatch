@@ -20,4 +20,28 @@
     <string name="cd_status_date">status date</string>
     <string name="tab_title">Title</string>
     <string name="tab_count">0</string>
+    <!-- HowToUse step strings -->
+    <string name="htu_step1_title">1. Open WhatsApp and View Status</string>
+    <string name="htu_step1_body">Open WhatsApp on your smartphone.\nScroll through your contacts\' statuses and view the status you want to download.\nNote: Ensure you view the status in WhatsApp first for it to appear in StatusCatch.</string>
+
+    <string name="htu_step2_title">2. Launch StatusCatch</string>
+    <string name="htu_step2_body">Open the StatusCatch app on your smartphone.</string>
+
+    <string name="htu_step3_title">3. Grant Storage Permissions</string>
+    <string name="htu_step3_body">Make sure StatusCatch has permission to access your device\'s storage. If not granted already, enable storage access in your device\'s settings.</string>
+
+    <string name="htu_step4_title">4. Status Appears in StatusCatch</string>
+    <string name="htu_step4_body">The status you viewed on WhatsApp will automatically appear within the StatusCatch app.</string>
+
+    <string name="htu_step5_title">5. Download Status</string>
+    <string name="htu_step5_body">Locate the status you wish to download within StatusCatch and tap the download icon next to it.</string>
+
+    <string name="htu_step6_title">6. Save to Local Storage</string>
+    <string name="htu_step6_body">StatusCatch will save the downloaded status to your device\'s local storage. Access the saved status in StatusCatch or your gallery.</string>
+
+    <string name="htu_tips_title">Additional Tips</string>
+    <string name="htu_tips_body">Offline Viewing: Downloaded statuses can be viewed offline anytime, even after they expire on WhatsApp.\nUpdates: StatusCatch may update to support new features or WhatsApp status format changes.</string>
+
+    <!-- Added resource -->
+    <string name="desc_dropdown">Expand step</string>
 </resources>

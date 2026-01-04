@@ -42,6 +42,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_howToUse"
+        android:padding="10dp"
         android:layout_width="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"

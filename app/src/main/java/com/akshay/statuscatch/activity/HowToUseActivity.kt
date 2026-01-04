@@ -48,32 +48,32 @@ class HowToUseActivity : AppCompatActivity() {
     private fun buildHowToUseList(): List<HowToUse> {
         return listOf(
             HowToUse(
-                "1. Open WhatsApp and View Status",
-                "Open WhatsApp on your smartphone.\nScroll through your contacts' statuses and view the status you want to download.\nNote: Ensure you view the status in WhatsApp first for it to appear in StatusCatch."
+                getString(com.akshay.statuscatch.R.string.htu_step1_title),
+                getString(com.akshay.statuscatch.R.string.htu_step1_body)
             ),
             HowToUse(
-                "2. Launch StatusCatch",
-                "Open the StatusCatch app on your smartphone."
+                getString(com.akshay.statuscatch.R.string.htu_step2_title),
+                getString(com.akshay.statuscatch.R.string.htu_step2_body)
             ),
             HowToUse(
-                "3. Grant Storage Permissions",
-                "Make sure StatusCatch has permission to access your device's storage. If not granted already, enable storage access in your device's settings."
+                getString(com.akshay.statuscatch.R.string.htu_step3_title),
+                getString(com.akshay.statuscatch.R.string.htu_step3_body)
             ),
             HowToUse(
-                "4. Status Appears in StatusCatch",
-                "The status you viewed on WhatsApp will automatically appear within the StatusCatch app."
+                getString(com.akshay.statuscatch.R.string.htu_step4_title),
+                getString(com.akshay.statuscatch.R.string.htu_step4_body)
             ),
             HowToUse(
-                "5. Download Status",
-                "Locate the status you wish to download within StatusCatch and tap the download icon next to it."
+                getString(com.akshay.statuscatch.R.string.htu_step5_title),
+                getString(com.akshay.statuscatch.R.string.htu_step5_body)
             ),
             HowToUse(
-                "6. Save to Local Storage",
-                "StatusCatch will save the downloaded status to your device's local storage. Access the saved status in StatusCatch or your gallery."
+                getString(com.akshay.statuscatch.R.string.htu_step6_title),
+                getString(com.akshay.statuscatch.R.string.htu_step6_body)
             ),
             HowToUse(
-                "Additional Tips",
-                "Offline Viewing: Downloaded statuses can be viewed offline anytime, even after they expire on WhatsApp.\nUpdates: StatusCatch may update to support new features or WhatsApp status format changes."
+                getString(com.akshay.statuscatch.R.string.htu_tips_title),
+                getString(com.akshay.statuscatch.R.string.htu_tips_body)
             )
         )
     }
