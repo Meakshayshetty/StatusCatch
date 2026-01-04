@@ -1,32 +1,21 @@
 package com.akshay.statuscatch.activity
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.akshay.statuscatch.adapters.HowToUseAdapter
 import com.akshay.statuscatch.databinding.ActivityHowToUseBinding
 import com.akshay.statuscatch.model.HowToUse
 
-class HowToUseActivity : AppCompatActivity() {
+class HowToUseActivity : BaseActivity() {
     private val binding by lazy {
         ActivityHowToUseBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
 
-        // apply window insets to root container to avoid overlap with system bars
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         // prepare data and adapter
         val items = buildHowToUseList()

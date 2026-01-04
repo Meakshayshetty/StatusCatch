@@ -41,18 +41,16 @@ class ImageAndVideoAdapter(val list: ArrayList<MediaModel>, val context: Context
                 cardStatus.setOnClickListener {
                     if (mediaModel.type == MEDIA_TYPE_IMAGE) {
                         // goto image preview activity
-                        Intent().apply {
-                            putExtra(Constants.MEDIA_LIST_KEY,list)
-                            putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context, ImagePreviewActivity::class.java)
+                        Intent(context, ImagePreviewActivity::class.java).apply {
+                            putParcelableArrayListExtra(Constants.MEDIA_LIST_KEY, list)
+                            putExtra(Constants.MEDIA_SCROLL_KEY, layoutPosition)
                             context.startActivity(this)
                         }
                     } else {
                         // goto video preview activity
-                        Intent().apply {
-                            putExtra(Constants.MEDIA_LIST_KEY,list)
-                            putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context, VideoPreviewActivity::class.java)
+                        Intent(context, VideoPreviewActivity::class.java).apply {
+                            putParcelableArrayListExtra(Constants.MEDIA_LIST_KEY, list)
+                            putExtra(Constants.MEDIA_SCROLL_KEY, layoutPosition)
                             context.startActivity(this)
                         }
                     }

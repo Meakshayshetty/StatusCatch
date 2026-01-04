@@ -9,7 +9,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.akshay.statuscatch.R
@@ -24,7 +23,7 @@ import com.akshay.statuscatch.utils.slideFromStart
 import com.akshay.statuscatch.utils.slideToEndWithFadeOut
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private var statusFrag = FragmentStatus()
     private val activity = this
     private val binding by lazy {
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         SharedPrefUtils.init(activity)
         binding.apply {
             splashLogic()
