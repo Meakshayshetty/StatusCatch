@@ -1,89 +1,68 @@
 package com.akshay.statuscatch.activity
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.akshay.statuscatch.R
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.akshay.statuscatch.adapters.HowToUseAdapter
 import com.akshay.statuscatch.databinding.ActivityHowToUseBinding
-import com.akshay.statuscatch.databinding.ActivityMainBinding
 import com.akshay.statuscatch.model.HowToUse
 
-class HowToUseActivity : AppCompatActivity() {
-    private val list2 = ArrayList<HowToUse>()
+class HowToUseActivity : BaseActivity() {
     private val binding by lazy {
         ActivityHowToUseBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
 
-        }
-        val adapter by lazy {
-            HowToUseAdapter(list2, this)
-        }
-        addHowToUseList()
-        binding.rvHowToUse.adapter =adapter
+
+        // prepare data and adapter
+        val items = buildHowToUseList()
+        val adapter = HowToUseAdapter(ArrayList(items), this)
+
+        // setup RecyclerView with stable layout manager and dividers
+        binding.rvHowToUse.layoutManager = LinearLayoutManager(this)
+        binding.rvHowToUse.setHasFixedSize(true)
+        binding.rvHowToUse.adapter = adapter
+        binding.rvHowToUse.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
 
         binding.okayBtn.setOnClickListener {
             finish()
         }
     }
-    fun addHowToUseList(){
-        list2.add(
+
+    private fun buildHowToUseList(): List<HowToUse> {
+        return listOf(
             HowToUse(
-                "1. Open WhatsApp and View Status\n",
-                "Open WhatsApp on your smartphone.\n" +
-                        "Scroll through your contacts' statuses and view the status you want to download.\n" +
-                        "Note: Ensure you view the status in WhatsApp first for it to appear in StatusCatch."
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step1_title),
+                getString(com.akshay.statuscatch.R.string.htu_step1_body)
+            ),
             HowToUse(
-                "2. Launch StatusCatch\n",
-                "Open the StatusCatch app on your smartphone.\n"
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step2_title),
+                getString(com.akshay.statuscatch.R.string.htu_step2_body)
+            ),
             HowToUse(
-                "3. Grant Storage Permissions\n",
-                "Make sure StatusCatch has permission to access your device's storage.\n" +
-                        "If not granted already, enable storage access in your device's settings."
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step3_title),
+                getString(com.akshay.statuscatch.R.string.htu_step3_body)
+            ),
             HowToUse(
-                "4. Status Appears in StatusCatch\n",
-                "The status you viewed on WhatsApp will automatically appear within the StatusCatch app.\n"
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step4_title),
+                getString(com.akshay.statuscatch.R.string.htu_step4_body)
+            ),
             HowToUse(
-                "5. Download Status\n",
-                "Locate the status you wish to download within StatusCatch.\n" +
-                        "Tap on the download icon or similar option next to the status."
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step5_title),
+                getString(com.akshay.statuscatch.R.string.htu_step5_body)
+            ),
             HowToUse(
-                "6. Save to Local Storage\n",
-                "StatusCatch will save the downloaded status directly to your device's local storage.\n" +
-                        "Access the saved status in the StatusCatch app or your device's gallery."
-            )
-        )
-        list2.add(
+                getString(com.akshay.statuscatch.R.string.htu_step6_title),
+                getString(com.akshay.statuscatch.R.string.htu_step6_body)
+            ),
             HowToUse(
-                "Additional Tips\n",
-                "Offline Viewing: Downloaded statuses can be viewed offline anytime, even after they expire on WhatsApp.\n" +
-                        "Updates: StatusCatch may update to support new features or WhatsApp status format changes."
+                getString(com.akshay.statuscatch.R.string.htu_tips_title),
+                getString(com.akshay.statuscatch.R.string.htu_tips_body)
             )
         )
     }

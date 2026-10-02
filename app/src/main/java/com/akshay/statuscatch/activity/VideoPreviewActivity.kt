@@ -2,7 +2,6 @@ package com.akshay.statuscatch.activity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.akshay.statuscatch.adapters.VideoPreviewAdapter
@@ -14,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class VideoPreviewActivity : AppCompatActivity() {
+class VideoPreviewActivity : BaseActivity() {
     private val activity = this
     private val binding by lazy {
         ActivityVideosPreviewBinding.inflate(layoutInflater)
@@ -25,10 +24,8 @@ class VideoPreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
         binding.apply {
-            val list =
-                intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as ArrayList<MediaModel>
+            val list: ArrayList<MediaModel> = intent.getParcelableArrayListExtra(Constants.MEDIA_LIST_KEY) ?: arrayListOf()
             val scrollTo = intent.getIntExtra(Constants.MEDIA_SCROLL_KEY, 0)
             adapter = VideoPreviewAdapter(list, activity)
             videoRecyclerView.adapter = adapter
@@ -50,7 +47,6 @@ class VideoPreviewActivity : AppCompatActivity() {
 
 
         }
-
 
     }
 
@@ -81,19 +77,3 @@ class VideoPreviewActivity : AppCompatActivity() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

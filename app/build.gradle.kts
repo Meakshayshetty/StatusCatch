@@ -1,17 +1,19 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id ("com.google.firebase.crashlytics")
 }
 
 android {
     namespace = "com.akshay.statuscatch"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.akshay.statuscatch"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 3
         versionName = "1.1"
 

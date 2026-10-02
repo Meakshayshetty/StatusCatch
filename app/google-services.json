@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1005405943541",
+    "project_id": "statuscatch",
+    "storage_bucket": "statuscatch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005405943541:android:f61e158713743d955df7bc",
+        "android_client_info": {
+          "package_name": "com.akshay.statuscatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlShH_BkheEoCeN6ROFmoLR3ZsN28vQn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

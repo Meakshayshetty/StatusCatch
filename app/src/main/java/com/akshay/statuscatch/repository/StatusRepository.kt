@@ -15,8 +15,17 @@ import com.akshay.statuscatch.utils.SharedPrefKeys
 import com.akshay.statuscatch.utils.SharedPrefUtils
 import com.akshay.statuscatch.utils.getFileExtension
 import com.akshay.statuscatch.utils.isStatusExist
+import com.akshay.statuscatch.utils.getLastModifiedMillis
+import com.akshay.statuscatch.utils.getCreationMillis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.joinAll
 
-class StatusRepository(val context: Context) {
+class StatusRepository(val context: Context, private val metadataConcurrency: Int = 4) {
 
     val whatsAppStatusesLiveData = MutableLiveData<ArrayList<MediaModel>>()
     val whatsAppBusinessStatusesLiveData = MutableLiveData<ArrayList<MediaModel>>()
@@ -29,6 +38,10 @@ class StatusRepository(val context: Context) {
     private val TAG = "StatusRepo"
 
     fun getAllStatuses(whatsAppType: String = Constants.TYPE_WHATSAPP_MAIN) {
+        // clear previous lists to avoid duplicates across multiple calls
+        wpStatusesList.clear()
+        wpBusinessStatusesList.clear()
+
         val treeUri = when (whatsAppType) {
             Constants.TYPE_WHATSAPP_MAIN -> {
                 SharedPrefUtils.getPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, "")?.toUri()!!
@@ -60,11 +73,27 @@ class StatusRepository(val context: Context) {
                         MEDIA_TYPE_IMAGE
                     }
 
+                    // get last modified epoch millis and creation epoch millis (nullable)
+                    val lastModifiedEpoch = try {
+                        getLastModifiedMillis(context, file)
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Error getting last modified: ${e.message}")
+                        null
+                    }
+                    val creationEpoch = try {
+                        getCreationMillis(context, file, type)
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Error getting creation time: ${e.message}")
+                        null
+                    }
+
                     val model = MediaModel(
                         pathUri = file.uri.toString(),
                         fileName = file.name!!,
                         type = type,
-                        isDownloaded = isDownloaded
+                        isDownloaded = isDownloaded,
+                        lastModifiedEpochMs = lastModifiedEpoch,
+                        creationEpochMs = creationEpoch
                     )
                     when (whatsAppType) {
                         Constants.TYPE_WHATSAPP_MAIN -> {
@@ -80,17 +109,102 @@ class StatusRepository(val context: Context) {
 
                 }
             }
+
+            // Post initial lists right away (unsorted or partially sorted)
             when (whatsAppType) {
                 Constants.TYPE_WHATSAPP_MAIN -> {
-                    Log.d(TAG, "getAllStatuses: Pushing Value to Wp live Data")
-                    whatsAppStatusesLiveData.postValue(wpStatusesList)
+                    whatsAppStatusesLiveData.postValue(ArrayList(wpStatusesList))
                 }
 
                 else -> {
-                    Log.d(TAG, "getAllStatuses: Pushing Value to Wp Business live Data")
-                    whatsAppBusinessStatusesLiveData.postValue(wpBusinessStatusesList)
+                    whatsAppBusinessStatusesLiveData.postValue(ArrayList(wpBusinessStatusesList))
+                }
+            }
+
+            // Launch background coroutines to fetch any missing/updated metadata per item
+            CoroutineScope(Dispatchers.IO).launch {
+                // controlled concurrency using a semaphore
+                val concurrency = metadataConcurrency.coerceAtLeast(1)
+                val semaphore = Semaphore(concurrency)
+
+                val jobs = if (whatsAppType == Constants.TYPE_WHATSAPP_MAIN) {
+                    wpStatusesList.map { model ->
+                        launch {
+                            semaphore.withPermit {
+                                var updated = false
+                                try {
+                                    val doc = try { DocumentFile.fromSingleUri(context, model.pathUri.toUri()) } catch (_: Exception) { null }
+                                    if (doc != null) {
+                                        if (model.creationEpochMs == null) {
+                                            val c = getCreationMillis(context, doc, model.type)
+                                            if (c != null) {
+                                                model.creationEpochMs = c
+                                                updated = true
+                                            }
+                                        }
+                                        if (model.lastModifiedEpochMs == null) {
+                                            val lm = getLastModifiedMillis(context, doc)
+                                            if (lm != null) {
+                                                model.lastModifiedEpochMs = lm
+                                                updated = true
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    Log.d(TAG, "Error updating metadata for ${model.fileName}: ${e.message}")
+                                }
+
+                                if (updated) {
+                                    withContext(Dispatchers.Main) {
+                                        wpStatusesList.sortWith(compareByDescending<MediaModel> { it.creationEpochMs ?: it.lastModifiedEpochMs ?: 0L })
+                                        whatsAppStatusesLiveData.postValue(ArrayList(wpStatusesList))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    wpBusinessStatusesList.map { model ->
+                        launch {
+                            semaphore.withPermit {
+                                var updated = false
+                                try {
+                                    val doc = try { DocumentFile.fromSingleUri(context, model.pathUri.toUri()) } catch (_: Exception) { null }
+                                    if (doc != null) {
+                                        if (model.creationEpochMs == null) {
+                                            val c = getCreationMillis(context, doc, model.type)
+                                            if (c != null) {
+                                                model.creationEpochMs = c
+                                                updated = true
+                                            }
+                                        }
+                                        if (model.lastModifiedEpochMs == null) {
+                                            val lm = getLastModifiedMillis(context, doc)
+                                            if (lm != null) {
+                                                model.lastModifiedEpochMs = lm
+                                                updated = true
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    Log.d(TAG, "Error updating metadata for ${model.fileName}: ${e.message}")
+                                }
+
+                                if (updated) {
+                                    withContext(Dispatchers.Main) {
+                                        wpBusinessStatusesList.sortWith(compareByDescending<MediaModel> { it.creationEpochMs ?: it.lastModifiedEpochMs ?: 0L })
+                                        whatsAppBusinessStatusesLiveData.postValue(ArrayList(wpBusinessStatusesList))
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
+                // wait for all launched jobs to finish
+                if (jobs.isNotEmpty()) {
+                    joinAll(*jobs.toTypedArray())
+                }
             }
 
         }
@@ -100,14 +214,3 @@ class StatusRepository(val context: Context) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-

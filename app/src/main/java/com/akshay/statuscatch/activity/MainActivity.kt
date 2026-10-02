@@ -1,7 +1,6 @@
 package com.akshay.statuscatch.activity
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,8 +9,8 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.akshay.statuscatch.R
 import com.akshay.statuscatch.databinding.ActivityMainBinding
 import com.akshay.statuscatch.fragment.FragmentSettings
@@ -24,7 +23,7 @@ import com.akshay.statuscatch.utils.slideFromStart
 import com.akshay.statuscatch.utils.slideToEndWithFadeOut
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private var statusFrag = FragmentStatus()
     private val activity = this
     private val binding by lazy {
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         SharedPrefUtils.init(activity)
         binding.apply {
             splashLogic()
@@ -41,35 +41,45 @@ class MainActivity : AppCompatActivity() {
             val fragmentWhatsAppStatus = FragmentStatus()
             val bundle = Bundle()
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-            replaceFragment(fragmentWhatsAppStatus, bundle)
+            replaceFragment(fragmentWhatsAppStatus, bundle, addToBackStack = false)
             toolBar.setNavigationOnClickListener {
                 // activity.onBackPressed()
             }
-            binding.bottomNavigation.setOnNavigationItemSelectedListener {
+            binding.bottomNavigation.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_status -> {
-                        val fragmentWhatsAppStatus = FragmentStatus()
-                        val bundle = Bundle()
-                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-                        replaceFragment(fragmentWhatsAppStatus, bundle)
+                        // don't reload if already showing FragmentStatus with TYPE_WHATSAPP_MAIN
+                        val current = getCurrentFragment()
+                        if (current !is FragmentStatus || current.arguments?.getString(Constants.FRAGMENT_TYPE_KEY) != Constants.TYPE_WHATSAPP_MAIN) {
+                            val fragmentWhatsAppStatus = FragmentStatus()
+                            val bundle = Bundle()
+                            bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+                            replaceFragment(fragmentWhatsAppStatus, bundle, addToBackStack = false)
+                        }
                         statusFrag.bottomNavListener(1)
 
                     }
 
                     R.id.menu_business_status -> {
-                        val fragmentWhatsAppStatus = FragmentStatus()
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.FRAGMENT_TYPE_KEY,
-                            Constants.TYPE_WHATSAPP_BUSINESS
-                        )
-                        replaceFragment(fragmentWhatsAppStatus, bundle)
+                        val current = getCurrentFragment()
+                        if (current !is FragmentStatus || current.arguments?.getString(Constants.FRAGMENT_TYPE_KEY) != Constants.TYPE_WHATSAPP_BUSINESS) {
+                            val fragmentWhatsAppStatus = FragmentStatus()
+                            val bundle = Bundle()
+                            bundle.putString(
+                                Constants.FRAGMENT_TYPE_KEY,
+                                Constants.TYPE_WHATSAPP_BUSINESS
+                            )
+                            replaceFragment(fragmentWhatsAppStatus, bundle, addToBackStack = false)
+                        }
                         statusFrag.bottomNavListener(2)
 
                     }
 
                     R.id.menu_settings -> {
-                        replaceFragment(FragmentSettings())
+                        val current = getCurrentFragment()
+                        if (current !is FragmentSettings) {
+                            replaceFragment(FragmentSettings(), addToBackStack = false)
+                        }
                     }
                 }
 
@@ -81,6 +91,10 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         })
+    }
+
+    private fun getCurrentFragment(): Fragment? {
+        return supportFragmentManager.findFragmentById(R.id.fragment_container)
     }
 
     private val PERMISSION_REQUEST_CODE = 50
@@ -129,20 +143,4 @@ class MainActivity : AppCompatActivity() {
             }, 2000)
         }
     }
-
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        fragment?.onActivityResult(requestCode, resultCode, data)
-    }
 }
-
-
-
-
-
-
-
-
-

@@ -52,6 +52,14 @@ class StatusViewModel(val repo: StatusRepository) : ViewModel() {
             CoroutineScope(Dispatchers.IO).launch {
                 repo.getAllStatuses(Constants.TYPE_WHATSAPP_BUSINESS)
             }
+            // Ensure LiveData for images and videos are wired so fragments get filtered/sorted lists
+            // Observers are added on the main thread
+            CoroutineScope(Dispatchers.Main).launch {
+                getWhatsAppImages()
+                getWhatsAppVideos()
+                getWhatsAppBusinessImages()
+                getWhatsAppBusinessVideos()
+            }
         }
     }
 
@@ -133,15 +141,3 @@ class StatusViewModel(val repo: StatusRepository) : ViewModel() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

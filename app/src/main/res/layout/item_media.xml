@@ -27,7 +27,8 @@
                 android:id="@+id/status_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/cd_status_image"/>
 
             <ImageView
                 android:id="@+id/status_play"
@@ -35,6 +36,7 @@
                 android:layout_height="36dp"
                 android:alpha="0.9"
                 android:src="@drawable/ic_play"
+                android:contentDescription="@string/cd_status_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -52,6 +54,7 @@
                 android:background="@drawable/round_gradient"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/download_new"
+                android:contentDescription="@string/cd_status_download"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:tint="@color/white" />

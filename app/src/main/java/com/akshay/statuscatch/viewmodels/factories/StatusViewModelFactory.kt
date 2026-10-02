@@ -1,4 +1,4 @@
-package com.devatrii.statussaver.viewmodels.factories
+package com.akshay.statuscatch.viewmodels.factories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
